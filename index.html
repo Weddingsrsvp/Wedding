@@ -1,261 +1,200 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>دعوة زفاف ملكية</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Wedding Invitation</title>
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    <meta name="description" content="Wedding Invitation">
 
-body {
-  font-family: "Cairo", sans-serif;
-  background: #000;
-  color: #fff;
-  overflow-x: hidden;
-}
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-/* ===== ULTRA LUXURY PALACE BACKGROUND ===== */
-.hero {
-  height: 100vh;
-  width: 100%;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  /* deep palace gradient base */
-  background:
-    radial-gradient(circle at 20% 30%, rgba(212,175,55,0.15), transparent 40%),
-    radial-gradient(circle at 80% 70%, rgba(255,215,120,0.10), transparent 45%),
-    linear-gradient(180deg, #050505, #0a0a0a, #000);
-  overflow: hidden;
-}
-
-/* gold fog layer */
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at center, rgba(255,215,120,0.08), transparent 60%),
-    radial-gradient(circle at 60% 40%, rgba(212,175,55,0.12), transparent 50%);
-  filter: blur(2px);
-}
-
-/* soft cinematic vignette */
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.85));
-}
-
-/* floating gold particles */
-.particles {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-}
-
-.particles span {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: rgba(212,175,55,0.8);
-  border-radius: 50%;
-  animation: float 10s linear infinite;
-  box-shadow: 0 0 10px rgba(212,175,55,0.8);
-}
-
-@keyframes float {
-  0% { transform: translateY(100vh) scale(0); opacity: 0; }
-  10% { opacity: 1; }
-  100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
-}
-
-/* content */
-.content {
-  position: relative;
-  z-index: 2;
-  max-width: 850px;
-  padding: 20px;
-}
-
-h1 {
-  font-family: "Playfair Display", serif;
-  font-size: 54px;
-  color: #d4af37;
-  letter-spacing: 2px;
-  text-shadow: 0 0 30px rgba(212,175,55,0.4);
-}
-
-.subtitle {
-  margin-top: 15px;
-  font-size: 20px;
-  color: #f5f5f5;
-  opacity: 0.9;
-}
-
-.timer {
-  margin-top: 25px;
-  font-size: 22px;
-  color: #d4af37;
-}
-
-/* divider */
-.divider {
-  width: 140px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #d4af37, transparent);
-  margin: 20px auto;
-}
-
-/* RSVP */
-.rsvp {
-  background: linear-gradient(180deg, #070707, #000);
-  padding: 80px 20px;
-  text-align: center;
-}
-
-.rsvp h2 {
-  font-size: 34px;
-  color: #d4af37;
-  font-family: "Playfair Display", serif;
-}
-
-form {
-  max-width: 520px;
-  margin: 30px auto 0;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-input, select, textarea {
-  padding: 14px;
-  border-radius: 10px;
-  border: 1px solid rgba(212,175,55,0.35);
-  background: rgba(255,255,255,0.05);
-  color: #fff;
-  outline: none;
-}
-
-button {
-  padding: 15px;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #d4af37, #b88a2a);
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  transform: scale(1.04);
-  box-shadow: 0 0 25px rgba(212,175,55,0.4);
-}
-</style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="hero">
+    <!-- Floating Particles -->
+    <div class="particles"></div>
 
-  <div class="particles" id="particles"></div>
+    <!-- Background -->
+    <div class="background-overlay"></div>
 
-  <div class="content">
-    <h1>دعوة لحضور حفل زفاف ملكي</h1>
-    <div class="divider"></div>
+    <!-- Palace Decorations -->
+    <div class="left-column"></div>
+    <div class="right-column"></div>
 
-    <div class="subtitle">
-      بكل الحب والفخر ندعوكم لمشاركتنا ليلة من ألف ليلة وليلة
-    </div>
+    <div class="chandelier"></div>
 
-    <div class="timer" id="timer">-- يوم -- ساعة -- دقيقة -- ثانية</div>
-  </div>
-</div>
+    <!-- Main Wrapper -->
+    <main class="container">
 
-<div class="rsvp">
-  <h2>تأكيد الحضور</h2>
+        <!-- Hero -->
+        <section class="hero">
 
-  <form id="rsvpForm">
-    <input type="text" id="name" placeholder="الاسم الكامل" required>
+            <div class="hero-content">
 
-    <select id="attendance">
-      <option value="">هل ستحضر؟</option>
-      <option value="نعم">نعم سأحضر</option>
-      <option value="لا">لن أستطيع</option>
-    </select>
+                <p class="small-title">
+                    نتشرف بدعوتكم لحضور
+                </p>
 
-    <input type="number" id="guests" placeholder="عدد المرافقين" min="0">
+                <h1 class="couple-names">
+                    <span id="groomName">اسم العريس</span>
 
-    <textarea id="message" placeholder="رسالة تهنئة"></textarea>
+                    <span class="heart">
+                        ♥
+                    </span>
 
-    <button type="submit">إرسال عبر واتساب</button>
-  </form>
-</div>
+                    <span id="brideName">
+                        اسم العروس
+                    </span>
+                </h1>
 
-<script>
-// ===== TIMER =====
-const weddingDate = new Date("2026-12-31T00:00:00").getTime();
+                <p class="invitation-text">
+                    بكل الحب والسعادة ندعوكم لمشاركتنا أجمل لحظات العمر
+                    وحضور حفل زفافنا، حضوركم يسعدنا ويزيد فرحتنا.
+                </p>
 
-function updateTimer() {
-  const now = new Date().getTime();
-  const diff = weddingDate - now;
+            </div>
 
-  const d = Math.floor(diff / (1000*60*60*24));
-  const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-  const m = Math.floor((diff % (1000*60*60)) / (1000*60));
-  const s = Math.floor((diff % (1000*60)) / 1000);
+        </section>
 
-  document.getElementById("timer").innerHTML =
-    `${d} يوم ${h} ساعة ${m} دقيقة ${s} ثانية`;
-}
-setInterval(updateTimer, 1000);
-updateTimer();
+        <!-- Countdown -->
 
-// ===== PARTICLES =====
-const container = document.getElementById("particles");
+        <section class="countdown-section">
 
-for (let i = 0; i < 60; i++) {
-  const span = document.createElement("span");
-  span.style.left = Math.random() * 100 + "vw";
-  span.style.animationDuration = (5 + Math.random() * 10) + "s";
-  span.style.opacity = Math.random();
-  span.style.width = span.style.height = (2 + Math.random() * 3) + "px";
-  container.appendChild(span);
-}
+            <div class="countdown-title">
+                العد التنازلي
+            </div>
 
-// ===== RSVP =====
-document.getElementById("rsvpForm").addEventListener("submit", function(e){
-  e.preventDefault();
+            <div id="countdown">
 
-  const name = document.getElementById("name").value;
-  const attendance = document.getElementById("attendance").value;
-  const guests = document.getElementById("guests").value;
-  const message = document.getElementById("message").value;
+                <div class="time-box">
 
-  const phone = "972500000000";
+                    <span id="days">00</span>
 
-  const text =
-`دعوة زفاف ملكية:
-الاسم: ${name}
-الحضور: ${attendance}
-عدد المرافقين: ${guests}
-رسالة: ${message}`;
+                    <small>يوم</small>
 
-  const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
-  window.open(url, "_blank");
-});
-</script>
+                </div>
+
+                <div class="time-box">
+
+                    <span id="hours">00</span>
+
+                    <small>ساعة</small>
+
+                </div>
+
+                <div class="time-box">
+
+                    <span id="minutes">00</span>
+
+                    <small>دقيقة</small>
+
+                </div>
+
+                <div class="time-box">
+
+                    <span id="seconds">00</span>
+
+                    <small>ثانية</small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Event Details -->
+
+        <section class="details">
+
+            <div class="detail-card">
+
+                <h3>📅 التاريخ</h3>
+
+                <p id="weddingDateText">
+                    20 ديسمبر 2026
+                </p>
+
+            </div>
+
+            <div class="detail-card">
+
+                <h3>🕐 الوقت</h3>
+
+                <p id="weddingTime">
+                    7:30 مساءً
+                </p>
+
+            </div>
+
+            <div class="detail-card">
+
+                <h3>📍 المكان</h3>
+
+                <p id="venue">
+                    قاعة الأفراح
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- RSVP -->
+
+        <section class="rsvp">
+
+            <h2>
+                تأكيد الحضور
+            </h2>
+
+            <form id="rsvpForm">
+
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="الاسم الكامل"
+                    required>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    placeholder="رقم الجوال"
+                    required>
+
+                <input
+                    type="number"
+                    id="guests"
+                    placeholder="عدد المرافقين"
+                    min="0">
+
+                <textarea
+                    id="message"
+                    rows="4"
+                    placeholder="رسالة اختيارية"></textarea>
+
+                <button type="submit">
+
+                    تأكيد عبر واتساب
+
+                </button>
+
+            </form>
+
+        </section>
+
+    </main>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
 
 </body>
+
 </html>
