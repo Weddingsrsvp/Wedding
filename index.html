@@ -3,150 +3,269 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Wedding Experience Selector</title>
+<title>Wedding Experience</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
+:root{
+  --gold:#d4af37;
+}
+
 body{
   margin:0;
-  font-family:"Cairo",sans-serif;
-  background:#0b0b10;
-  color:#fff;
+  transition:0.6s ease;
   text-align:center;
+  overflow-x:hidden;
 }
 
-/* LANDING */
+/* =========================
+   PREMIUM BASE LAYOUT
+========================= */
+.container{
+  max-width:600px;
+  margin:auto;
+  padding:24px;
+}
+
+h1,h2{
+  margin:0;
+}
+
+/* =========================
+   LANDING PAGE
+========================= */
 #selector{
-  padding:40px 20px;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:20px;
 }
 
-h1{
-  font-size:32px;
-  color:#d4af37;
+.hero-title{
+  font-size:34px;
+  font-weight:700;
+  margin-bottom:10px;
+  letter-spacing:0.5px;
 }
 
+.hero-sub{
+  opacity:0.6;
+  margin-bottom:30px;
+}
+
+/* CARDS */
 .cards{
   display:flex;
   flex-direction:column;
-  gap:15px;
-  max-width:400px;
-  margin:30px auto;
+  gap:14px;
+  max-width:420px;
+  margin:auto;
 }
 
 .card{
-  padding:20px;
-  border-radius:15px;
+  padding:18px;
+  border-radius:18px;
   cursor:pointer;
-  transition:0.3s;
+  transition:0.35s;
   border:1px solid rgba(255,255,255,0.1);
+  text-align:left;
+  position:relative;
+  overflow:hidden;
 }
 
 .card:hover{
-  transform:scale(1.03);
+  transform:translateY(-4px) scale(1.01);
 }
 
-.gold{background:linear-gradient(135deg,#1a1a1a,#3a2f1b);}
-.white{background:linear-gradient(135deg,#ffffff,#cfcfcf); color:#000;}
-.arabic{background:linear-gradient(135deg,#0e0e0e,#1b1b1b);}
+.card small{
+  opacity:0.7;
+}
 
-/* WEDDING APP */
+/* CARD STYLES */
+.goldCard{
+  background:linear-gradient(135deg,#1a1a1a,#2c2412);
+  color:#fff;
+}
+
+.whiteCard{
+  background:linear-gradient(135deg,#ffffff,#e9e9e9);
+  color:#111;
+}
+
+.arabicCard{
+  background:linear-gradient(135deg,#0e0e0e,#1b1b1b);
+  color:#fff;
+}
+
+/* =========================
+   APP AREA (RSVP)
+========================= */
 #app{
   display:none;
-  padding:20px;
+  min-height:100vh;
+  padding:30px 20px;
 }
 
-h2{
-  color:#d4af37;
+.glass{
+  backdrop-filter: blur(18px);
+  border-radius:20px;
+  padding:20px;
+  margin-top:20px;
+  border:1px solid rgba(255,255,255,0.08);
 }
 
 input,select{
-  width:90%;
-  padding:12px;
-  margin:8px;
-  border-radius:10px;
+  width:100%;
+  padding:14px;
+  margin:8px 0;
+  border-radius:12px;
   border:none;
+  outline:none;
+  font-size:14px;
 }
 
 button{
-  width:90%;
-  padding:12px;
-  background:#d4af37;
+  width:100%;
+  padding:14px;
   border:none;
-  border-radius:10px;
-  font-weight:bold;
+  border-radius:12px;
+  font-weight:700;
   cursor:pointer;
+  transition:0.3s;
 }
 
-.topbar{
-  margin-bottom:20px;
-  opacity:0.7;
-  cursor:pointer;
+button:hover{
+  transform:scale(1.02);
+}
+
+/* =========================
+   THEMES (REAL PREMIUM DIFFERENCE)
+========================= */
+
+/* GOLD THEME */
+body.gold{
+  background: radial-gradient(circle at top, #1a1a1a, #000);
+  font-family:"Playfair Display",serif;
+  color:#fff;
+}
+
+body.gold button{
+  background:linear-gradient(135deg,#d4af37,#f5e6a4);
+  color:#000;
+}
+
+/* WHITE THEME */
+body.white{
+  background:#f6f6f6;
+  font-family:"Inter",sans-serif;
+  color:#111;
+}
+
+body.white .card{
+  border:1px solid rgba(0,0,0,0.08);
+}
+
+body.white button{
+  background:#111;
+  color:#fff;
+}
+
+/* ARABIC THEME */
+body.arabic{
+  background:linear-gradient(135deg,#0a0a0a,#1f1f1f);
+  font-family:"Cairo",sans-serif;
+  color:#fff;
+}
+
+/* ANIMATION */
+.fade{
+  animation:fadeIn 0.8s ease forwards;
+  opacity:0;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(10px);}
+  to{opacity:1; transform:translateY(0);}
 }
 </style>
 </head>
 
 <body>
 
-<!-- THEME SELECTOR -->
-<div id="selector">
-  <h1>Choose Your Wedding Experience</h1>
+<!-- =========================
+     LANDING PAGE
+========================= -->
+<div id="selector" class="fade">
+
+  <div class="hero-title">Wedding Experience Builder</div>
+  <div class="hero-sub">Choose your luxury wedding theme</div>
 
   <div class="cards">
 
-    <div class="card gold" onclick="start('gold')">
-      ✨ Royal Gold<br><small>Luxury palace style</small>
+    <div class="card goldCard" onclick="start('gold')">
+      ✨ Royal Gold<br>
+      <small>Luxury palace cinematic experience</small>
     </div>
 
-    <div class="card white" onclick="start('white')">
-      🤍 Modern White<br><small>Clean elegant design</small>
+    <div class="card whiteCard" onclick="start('white')">
+      🤍 Modern White<br>
+      <small>Clean Apple-style elegance</small>
     </div>
 
-    <div class="card arabic" onclick="start('arabic')">
-      🕌 Arabic Luxury<br><small>Traditional royal feel</small>
+    <div class="card arabicCard" onclick="start('arabic')">
+      🕌 Arabic Luxury<br>
+      <small>Traditional royal Arabic design</small>
     </div>
 
   </div>
+
 </div>
 
-<!-- APP -->
+<!-- =========================
+     APP (RSVP SYSTEM)
+========================= -->
 <div id="app">
 
-  <div class="topbar" onclick="back()">← Back to Themes</div>
+  <div class="container glass">
 
-  <h2>Wedding RSVP</h2>
+    <h2>Wedding RSVP</h2>
 
-  <input id="name" placeholder="Name / الاسم" />
+    <input id="name" placeholder="Name / الاسم" />
 
-  <select id="attend">
-    <option value="Yes">Attending / نعم</option>
-    <option value="No">Not Attending / لا</option>
-    <option value="Maybe">Maybe / ربما</option>
-  </select>
+    <select id="attend">
+      <option value="Yes">Attending / نعم</option>
+      <option value="No">Not Attending / لا</option>
+      <option value="Maybe">Maybe / ربما</option>
+    </select>
 
-  <input id="guests" type="number" placeholder="Guests / عدد المرافقين" />
+    <input id="guests" type="number" placeholder="Guests / عدد المرافقين" />
 
-  <button onclick="send()">Send via WhatsApp</button>
+    <button onclick="send()">Send via WhatsApp</button>
+
+  </div>
 
 </div>
 
 <script>
 const phone = "13239259150";
 
-/* START THEME */
+/* =========================
+   START THEME
+========================= */
 function start(theme){
   localStorage.setItem("theme", theme);
+
+  document.body.className = theme;
+
   document.getElementById("selector").style.display="none";
   document.getElementById("app").style.display="block";
 }
 
-/* BACK */
-function back(){
-  document.getElementById("selector").style.display="block";
-  document.getElementById("app").style.display="none";
-}
-
-/* WHATSAPP */
+/* =========================
+   WHATSAPP RSVP
+========================= */
 function send(){
   const name = document.getElementById("name").value;
   const attend = document.getElementById("attend").value;
@@ -158,10 +277,15 @@ Name: ${name}
 Attendance: ${attend}
 Guests: ${guests}`;
 
-  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,"_blank");
+  window.open(
+    `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,
+    "_blank"
+  );
 }
 
-/* auto load theme */
+/* =========================
+   AUTO LOAD THEME
+========================= */
 window.onload = () => {
   const saved = localStorage.getItem("theme");
   if(saved){
