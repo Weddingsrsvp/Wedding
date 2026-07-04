@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Wedding Experience V8</title>
+<title>Luxury Wedding Experience V9</title>
 
 <style>
 /* =========================
@@ -17,113 +17,120 @@
 }
 
 body {
-  background: #000;
   color: white;
   overflow-x: hidden;
 }
 
 /* =========================
-   SCROLL SYSTEM
+   LUXURY BACKGROUND IMAGE
 ========================= */
-.container {
-  height: 100vh;
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0.85)),
+    url("https://images.unsplash.com/photo-1529634806980-85c3dd6d7a6a?auto=format&fit=crop&w=2000&q=80");
+  background-size: cover;
+  background-position: center;
+  z-index: -2;
+  filter: contrast(1.1) brightness(0.85);
 }
 
-.section {
-  height: 100vh;
-  scroll-snap-align: start;
+/* gold cinematic glow */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(214,178,94,0.12), transparent 45%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* =========================
+   NAVIGATION (APPLE STYLE)
+========================= */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  padding: 10px;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(18px);
+  z-index: 999;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 12px;
+  opacity: 0.75;
+  transition: 0.2s;
+}
+
+nav a:hover {
+  opacity: 1;
+  color: gold;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+section {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-  padding: 40px;
+  padding: 50px 18px;
 }
 
 /* =========================
-   PARALLAX BACKGROUNDS
-========================= */
-.bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  transform: scale(1.2);
-  transition: transform 1s ease;
-}
-
-.section.active .bg {
-  transform: scale(1);
-}
-
-.glow {
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  background: gold;
-  filter: blur(180px);
-  opacity: 0.12;
-  top: 20%;
-  left: 15%;
-}
-
-/* =========================
-   CARD
+   CARD (LUXURY GLASS)
 ========================= */
 .card {
-  position: relative;
-  z-index: 2;
-  max-width: 600px;
+  max-width: 680px;
+  width: 100%;
   text-align: center;
-  padding: 35px;
+  padding: 30px;
   border-radius: 26px;
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(25px);
-  border: 1px solid rgba(214,178,94,0.25);
-  box-shadow: 0 40px 120px rgba(0,0,0,0.7);
-
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 1s ease;
-}
-
-.section.active .card {
-  opacity: 1;
-  transform: translateY(0);
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(22px);
+  border: 1px solid rgba(214,178,94,0.22);
+  box-shadow: 0 35px 100px rgba(0,0,0,0.6);
 }
 
 /* =========================
-   TEXT
+   TYPOGRAPHY (FIXED SPACING)
 ========================= */
 h1 {
   font-size: 44px;
-  letter-spacing: 2px;
-  margin-bottom: 10px;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
 }
 
 p {
   opacity: 0.75;
-  font-size: 18px;
+  font-size: 17px;
+  line-height: 1.4;
+  margin-bottom: 6px;
 }
 
 /* =========================
-   BUTTONS
+   BUTTON
 ========================= */
 button {
-  margin-top: 18px;
-  padding: 14px 22px;
-  border-radius: 14px;
+  margin-top: 16px;
+  padding: 12px 22px;
+  border-radius: 12px;
   border: none;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 14px;
   background: linear-gradient(90deg, gold, #f5d88b);
   color: black;
   font-weight: bold;
-  transition: 0.2s ease;
-}
-
-button:active {
-  transform: scale(0.96);
 }
 
 /* =========================
@@ -131,137 +138,100 @@ button:active {
 ========================= */
 input, select {
   width: 100%;
-  margin-top: 12px;
-  padding: 14px;
-  border-radius: 14px;
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 12px;
   border: none;
   background: rgba(255,255,255,0.08);
   color: white;
 }
 
 /* =========================
-   MUSIC TOGGLE
+   COUNTDOWN
 ========================= */
-.music {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 999;
-  background: rgba(255,255,255,0.08);
-  padding: 12px 16px;
-  border-radius: 12px;
-  cursor: pointer;
+.countdown {
+  font-size: 26px;
+  margin-top: 10px;
+  color: gold;
+}
+
+/* =========================
+   SMALL TEXT
+========================= */
+.small {
+  opacity: 0.6;
+  font-size: 13px;
+  margin-top: 6px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container" id="container">
+<!-- NAV -->
+<nav>
+  <a href="#hero">Home</a>
+  <a href="#story">Story</a>
+  <a href="#details">Details</a>
+  <a href="#venue">Venue</a>
+  <a href="#rsvp">RSVP</a>
+</nav>
 
-  <!-- HERO -->
-  <section class="section active">
-    <div class="bg"></div>
-    <div class="glow"></div>
+<!-- HERO -->
+<section id="hero">
+  <div class="card">
+    <h1>Wedding Invitation</h1>
+    <p>A refined luxury wedding experience</p>
+  </div>
+</section>
 
-    <div class="card">
-      <h1>Wedding Invitation</h1>
-      <p>A cinematic experience designed like an Apple keynote event.</p>
-      <button onclick="scrollToSection(1)">Begin Experience</button>
-    </div>
-  </section>
+<!-- STORY -->
+<section id="story">
+  <div class="card">
+    <h1>Our Story</h1>
+    <p>Every moment brought us closer to this day.</p>
+  </div>
+</section>
 
-  <!-- STORY -->
-  <section class="section">
-    <div class="bg"></div>
+<!-- DETAILS -->
+<section id="details">
+  <div class="card">
+    <h1>Event Details</h1>
+    <p>Date: <b>Coming Soon</b></p>
 
-    <div class="card">
-      <h1>Our Story</h1>
-      <p>Every detail, every moment, every step brought us here.</p>
-    </div>
-  </section>
+    <div class="countdown" id="countdown">Loading...</div>
+    <p class="small">Counting down to our special day</p>
+  </div>
+</section>
 
-  <!-- DETAILS -->
-  <section class="section">
-    <div class="bg"></div>
+<!-- VENUE -->
+<section id="venue">
+  <div class="card">
+    <h1>Venue</h1>
+    <p>A carefully selected luxury destination.</p>
+    <p class="small">(Map integration ready)</p>
+  </div>
+</section>
 
-    <div class="card">
-      <h1>Event Details</h1>
-      <p>Date: <b>Coming Soon</b></p>
-      <p>Venue: <b>Luxury Location</b></p>
-      <p style="margin-top:10px;">Countdown:</p>
-      <p id="countdown">Loading...</p>
-    </div>
-  </section>
+<!-- RSVP -->
+<section id="rsvp">
+  <div class="card">
+    <h1>RSVP</h1>
 
-  <!-- VENUE REVEAL -->
-  <section class="section">
-    <div class="bg"></div>
+    <input id="name" placeholder="Name / الاسم" />
 
-    <div class="card">
-      <h1>Venue</h1>
-      <p>A place crafted for unforgettable memories.</p>
-      <p style="margin-top:10px; opacity:0.6;">
-        (Map integration ready here)
-      </p>
-    </div>
-  </section>
+    <select id="attending">
+      <option value="Yes">Attending / نعم</option>
+      <option value="No">Not Attending / لا</option>
+    </select>
 
-  <!-- RSVP -->
-  <section class="section">
-    <div class="bg"></div>
+    <input id="guests" type="number" placeholder="Guests / عدد المرافقين" />
 
-    <div class="card">
-      <h1>RSVP</h1>
-
-      <input id="name" placeholder="Name / الاسم" />
-
-      <select id="attending">
-        <option value="Yes">Attending / نعم</option>
-        <option value="No">Not Attending / لا</option>
-      </select>
-
-      <input id="guests" type="number" placeholder="Guests / عدد المرافقين" />
-
-      <button onclick="send()">Send RSVP</button>
-    </div>
-  </section>
-
-</div>
-
-<!-- MUSIC TOGGLE -->
-<div class="music" onclick="toggleMusic()">
-🎵 Music
-</div>
-
-<audio id="audio" loop>
-  <source src="https://cdn.pixabay.com/audio/2022/10/16/audio_12b0b2b8a7.mp3" type="audio/mp3">
-</audio>
+    <button onclick="send()">Send RSVP</button>
+  </div>
+</section>
 
 <script>
-
-/* =========================
-   SCROLL ANIMATION TRACKING
-========================= */
-const sections = document.querySelectorAll(".section");
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      sections.forEach(s => s.classList.remove("active"));
-      entry.target.classList.add("active");
-    }
-  });
-}, { threshold: 0.6 });
-
-sections.forEach(sec => observer.observe(sec));
-
-/* =========================
-   SCROLL CONTROL
-========================= */
-function scrollToSection(i) {
-  sections[i].scrollIntoView({ behavior: "smooth" });
-}
 
 /* =========================
    COUNTDOWN
@@ -279,12 +249,17 @@ setInterval(() => {
 }, 1000);
 
 /* =========================
-   RSVP
+   RSVP SEND
 ========================= */
 function send() {
   const name = document.getElementById("name").value;
   const attending = document.getElementById("attending").value;
   const guests = document.getElementById("guests").value;
+
+  if (!name) {
+    alert("Please enter your name");
+    return;
+  }
 
   const msg =
 `💍 Wedding RSVP
@@ -294,23 +269,6 @@ Guests: ${guests}`;
 
   window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
 }
-
-/* =========================
-   MUSIC CONTROL
-========================= */
-let playing = false;
-const audio = document.getElementById("audio");
-
-function toggleMusic() {
-  if (!playing) {
-    audio.play();
-    playing = true;
-  } else {
-    audio.pause();
-    playing = false;
-  }
-}
-
 </script>
 
 </body>
