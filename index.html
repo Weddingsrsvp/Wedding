@@ -3,101 +3,127 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Cinematic RSVP V5</title>
+<title>Wedding Experience V8</title>
 
 <style>
 /* =========================
-   DESIGN TOKENS (SINGLE SOURCE OF TRUTH)
-========================= */
-:root {
-  --bg1: #0a0a0a;
-  --bg2: #000;
-  --gold: #d6b25e;
-  --text: #ffffff;
-  --glass: rgba(255,255,255,0.06);
-}
-
-/* =========================
-   BASE RESET
+   BASE
 ========================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif;
 }
 
 body {
-  background: radial-gradient(circle at top, var(--bg1), var(--bg2));
-  color: var(--text);
+  background: #000;
+  color: white;
   overflow-x: hidden;
 }
 
 /* =========================
-   BACKGROUND LAYERS
+   SCROLL SYSTEM
 ========================= */
-.glow {
-  position: fixed;
-  width: 400px;
-  height: 400px;
-  background: var(--gold);
-  filter: blur(140px);
-  opacity: 0.12;
-  top: 10%;
-  left: 10%;
-  z-index: 0;
+.container {
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
 }
 
-/* =========================
-   APP CONTAINER
-========================= */
-#app {
-  position: relative;
-  z-index: 1;
-}
-
-/* =========================
-   SCREENS (ROUTER SYSTEM)
-========================= */
-.screen {
-  display: none;
-  min-height: 100vh;
+.section {
+  height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
   justify-content: center;
   align-items: center;
-  padding: 24px;
-}
-
-.screen.active {
-  display: flex;
+  position: relative;
+  padding: 40px;
 }
 
 /* =========================
-   CARD SYSTEM
+   PARALLAX BACKGROUNDS
+========================= */
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  transform: scale(1.2);
+  transition: transform 1s ease;
+}
+
+.section.active .bg {
+  transform: scale(1);
+}
+
+.glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: gold;
+  filter: blur(180px);
+  opacity: 0.12;
+  top: 20%;
+  left: 15%;
+}
+
+/* =========================
+   CARD
 ========================= */
 .card {
-  width: 100%;
-  max-width: 460px;
-  padding: 30px;
-  border-radius: 24px;
-  background: var(--glass);
-  backdrop-filter: blur(22px);
-  border: 1px solid rgba(214,178,94,0.25);
-  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
   text-align: center;
+  padding: 35px;
+  border-radius: 26px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(214,178,94,0.25);
+  box-shadow: 0 40px 120px rgba(0,0,0,0.7);
+
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s ease;
+}
+
+.section.active .card {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* =========================
-   TYPOGRAPHY
+   TEXT
 ========================= */
 h1 {
-  font-size: 28px;
+  font-size: 44px;
+  letter-spacing: 2px;
   margin-bottom: 10px;
-  letter-spacing: 1px;
 }
 
 p {
-  opacity: 0.7;
-  margin-bottom: 16px;
+  opacity: 0.75;
+  font-size: 18px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+button {
+  margin-top: 18px;
+  padding: 14px 22px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  background: linear-gradient(90deg, gold, #f5d88b);
+  color: black;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+button:active {
+  transform: scale(0.96);
 }
 
 /* =========================
@@ -105,78 +131,88 @@ p {
 ========================= */
 input, select {
   width: 100%;
-  padding: 14px;
   margin-top: 12px;
-  border-radius: 14px;
-  border: none;
-  outline: none;
-  background: rgba(255,255,255,0.08);
-  color: white;
-}
-
-/* =========================
-   BUTTONS
-========================= */
-button {
-  width: 100%;
   padding: 14px;
-  margin-top: 14px;
   border-radius: 14px;
   border: none;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-button:active {
-  transform: scale(0.97);
-}
-
-.primary {
-  background: linear-gradient(90deg, var(--gold), #f2d58a);
-  color: black;
-  font-weight: bold;
-}
-
-.secondary {
   background: rgba(255,255,255,0.08);
   color: white;
 }
 
 /* =========================
-   SMALL TEXT
+   MUSIC TOGGLE
 ========================= */
-.small {
-  font-size: 13px;
-  opacity: 0.6;
+.music {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  background: rgba(255,255,255,0.08);
+  padding: 12px 16px;
+  border-radius: 12px;
+  cursor: pointer;
 }
 </style>
 </head>
 
 <body>
 
-<div class="glow"></div>
+<div class="container" id="container">
 
-<div id="app">
+  <!-- HERO -->
+  <section class="section active">
+    <div class="bg"></div>
+    <div class="glow"></div>
 
-  <!-- =========================
-       HERO SCREEN
-  ========================== -->
-  <div id="screen-hero" class="screen active">
     <div class="card">
       <h1>Wedding Invitation</h1>
-      <p>Experience begins here</p>
-      <button class="primary" onclick="go('rsvp')">Enter</button>
+      <p>A cinematic experience designed like an Apple keynote event.</p>
+      <button onclick="scrollToSection(1)">Begin Experience</button>
     </div>
-  </div>
+  </section>
 
-  <!-- =========================
-       RSVP SCREEN
-  ========================== -->
-  <div id="screen-rsvp" class="screen">
+  <!-- STORY -->
+  <section class="section">
+    <div class="bg"></div>
+
     <div class="card">
+      <h1>Our Story</h1>
+      <p>Every detail, every moment, every step brought us here.</p>
+    </div>
+  </section>
 
+  <!-- DETAILS -->
+  <section class="section">
+    <div class="bg"></div>
+
+    <div class="card">
+      <h1>Event Details</h1>
+      <p>Date: <b>Coming Soon</b></p>
+      <p>Venue: <b>Luxury Location</b></p>
+      <p style="margin-top:10px;">Countdown:</p>
+      <p id="countdown">Loading...</p>
+    </div>
+  </section>
+
+  <!-- VENUE REVEAL -->
+  <section class="section">
+    <div class="bg"></div>
+
+    <div class="card">
+      <h1>Venue</h1>
+      <p>A place crafted for unforgettable memories.</p>
+      <p style="margin-top:10px; opacity:0.6;">
+        (Map integration ready here)
+      </p>
+    </div>
+  </section>
+
+  <!-- RSVP -->
+  <section class="section">
+    <div class="bg"></div>
+
+    <div class="card">
       <h1>RSVP</h1>
-      <p class="small">We look forward to celebrating with you</p>
 
       <input id="name" placeholder="Name / الاسم" />
 
@@ -187,51 +223,92 @@ button:active {
 
       <input id="guests" type="number" placeholder="Guests / عدد المرافقين" />
 
-      <button class="primary" onclick="send()">Send via WhatsApp</button>
-      <button class="secondary" onclick="go('hero')">Back</button>
-
+      <button onclick="send()">Send RSVP</button>
     </div>
-  </div>
+  </section>
 
 </div>
+
+<!-- MUSIC TOGGLE -->
+<div class="music" onclick="toggleMusic()">
+🎵 Music
+</div>
+
+<audio id="audio" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/10/16/audio_12b0b2b8a7.mp3" type="audio/mp3">
+</audio>
 
 <script>
 
 /* =========================
-   STATE ROUTER (CORE ARCHITECTURE)
+   SCROLL ANIMATION TRACKING
 ========================= */
-const state = {
-  screen: "hero"
-};
+const sections = document.querySelectorAll(".section");
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      sections.forEach(s => s.classList.remove("active"));
+      entry.target.classList.add("active");
+    }
+  });
+}, { threshold: 0.6 });
+
+sections.forEach(sec => observer.observe(sec));
 
 /* =========================
-   SCREEN CONTROLLER (ONLY ONE PLACE CONTROLS UI)
+   SCROLL CONTROL
 ========================= */
-function go(screen) {
-  state.screen = screen;
-
-  document.querySelectorAll(".screen").forEach(s => {
-    s.classList.remove("active");
-  });
-
-  document.getElementById("screen-" + screen).classList.add("active");
+function scrollToSection(i) {
+  sections[i].scrollIntoView({ behavior: "smooth" });
 }
 
 /* =========================
-   WHATSAPP SUBMISSION
+   COUNTDOWN
+========================= */
+const weddingDate = new Date("2026-12-31").getTime();
+
+setInterval(() => {
+  const now = new Date().getTime();
+  const diff = weddingDate - now;
+
+  const days = Math.floor(diff / (1000*60*60*24));
+
+  document.getElementById("countdown").innerText =
+    days + " days remaining";
+}, 1000);
+
+/* =========================
+   RSVP
 ========================= */
 function send() {
   const name = document.getElementById("name").value;
   const attending = document.getElementById("attending").value;
   const guests = document.getElementById("guests").value;
 
-  const message =
+  const msg =
 `💍 Wedding RSVP
 Name: ${name}
 Attending: ${attending}
 Guests: ${guests}`;
 
-  window.open("https://wa.me/?text=" + encodeURIComponent(message), "_blank");
+  window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
+}
+
+/* =========================
+   MUSIC CONTROL
+========================= */
+let playing = false;
+const audio = document.getElementById("audio");
+
+function toggleMusic() {
+  if (!playing) {
+    audio.play();
+    playing = true;
+  } else {
+    audio.pause();
+    playing = false;
+  }
 }
 
 </script>
