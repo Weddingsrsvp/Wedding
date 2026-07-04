@@ -1,16 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Wedding RSVP</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
+      color: #fff;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 30px;
+    }
+
+    h1 {
+      color: gold;
+      font-size: 36px;
+      margin-bottom: 5px;
+    }
+
+    p {
+      opacity: 0.8;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 16px;
+      margin-top: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: gold;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.85;
+    }
+
+    .qr {
+      margin-top: 20px;
+    }
+
+    img {
+      width: 180px;
+      border-radius: 12px;
+    }
+
+    .lang {
+      margin-top: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      opacity: 0.7;
+    }
+  </style>
 </head>
+
 <body>
 
-  <!-- trigger rebuild -->
+<div class="container">
 
-  <h1>Wedding RSVP Platform</h1>
-  <p>Professional wedding invitation and RSVP system.</p>
+  <h1>Wedding RSVP</h1>
+  <p>We are honored to invite you</p>
+
+  <div class="card">
+    <input id="name" placeholder="Your Name / اسمك" />
+    
+    <select id="attend">
+      <option value="Yes">Attending / نعم</option>
+      <option value="No">Not Attending / لا</option>
+      <option value="Maybe">Maybe / ربما</option>
+    </select>
+
+    <input id="guests" type="number" placeholder="Number of Guests / عدد المرافقين" />
+
+    <button onclick="sendWhatsApp()">Send RSVP</button>
+  </div>
+
+  <div class="card qr">
+    <h3>Scan to RSVP</h3>
+    <img id="qrCode" />
+    <button onclick="downloadQR()">Download QR</button>
+  </div>
+
+  <div class="lang" onclick="toggleLang()">
+    Toggle Language / تبديل اللغة
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+const phone = "13239259150";
+
+// WhatsApp RSVP
+function sendWhatsApp() {
+  const name = document.getElementById("name").value;
+  const attend = document.getElementById("attend").value;
+  const guests = document.getElementById("guests").value;
+
+  const msg =
+`Wedding RSVP:
+Name: ${name}
+Attendance: ${attend}
+Guests: ${guests}`;
+
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+  window.open(url, "_blank");
+}
+
+// QR CODE (dynamic)
+const qr = new QRCode(document.getElementById("qrCode"), {
+  text: window.location.href,
+  width: 180,
+  height: 180
+});
+
+// Download QR
+function downloadQR() {
+  const img = document.querySelector("#qrCode img");
+  const link = document.createElement("a");
+  link.href = img.src;
+  link.download = "wedding-qr.png";
+  link.click();
+}
+
+// simple language toggle (visual only starter)
+function toggleLang() {
+  document.body.dir = document.body.dir === "rtl" ? "ltr" : "rtl";
+}
+</script>
 
 </body>
 </html>
