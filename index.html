@@ -3,127 +3,134 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Wedding Experience Builder</title>
- 
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<title>Wedding RSVP</title>
 
 <style>
-body{
-  margin:0;
-  font-family:Inter, sans-serif;
-  transition:0.5s ease;
-  background:#0b0b10;
-  color:#fff;
-}
-
-/* IMPORTANT: default state */
-#app{
-  display:none;
-}
-
 /* =========================
-   LANDING
+   BASE RESET
 ========================= */
-#selector{
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  padding:20px;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
 
-h1{
-  color:#d4af37;
-  margin-bottom:10px;
-}
-
-.sub{
-  opacity:0.6;
-  margin-bottom:25px;
-}
-
-.card{
-  width:100%;
-  max-width:350px;
-  padding:16px;
-  margin:10px 0;
-  border-radius:14px;
-  cursor:pointer;
-  transition:0.3s;
-  border:1px solid rgba(255,255,255,0.1);
-  text-align:left;
-}
-
-.card:hover{
-  transform:scale(1.02);
-}
-
-.goldCard{background:linear-gradient(135deg,#1a1a1a,#2c2412);}
-.whiteCard{background:#fff; color:#111;}
-.arabicCard{background:linear-gradient(135deg,#0e0e0e,#1b1b1b);}
-
-/* =========================
-   APP
-========================= */
-#app{
-  min-height:100vh;
-  padding:30px 20px;
-  text-align:center;
-}
-
-.box{
-  max-width:400px;
-  margin:auto;
-  background:rgba(255,255,255,0.06);
-  padding:20px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,0.1);
-}
-
-input,select{
-  width:100%;
-  padding:12px;
-  margin:8px 0;
-  border-radius:10px;
-  border:none;
-  outline:none;
-}
-
-button{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  background:#d4af37;
-  font-weight:bold;
-  cursor:pointer;
+body {
+  transition: 0.4s ease;
 }
 
 /* =========================
    THEMES
 ========================= */
-body.gold{
-  background:radial-gradient(circle at top,#1a1a1a,#000);
+body.theme-dark {
+  background: #0f0f0f;
+  color: white;
 }
 
-body.white{
-  background:#f5f5f5;
-  color:#111;
+body.theme-gold {
+  background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+  color: gold;
 }
 
-body.white .box{
-  background:#fff;
-  border:1px solid #ddd;
+body.theme-light {
+  background: #ffffff;
+  color: #111;
 }
 
-body.white button{
-  background:#111;
-  color:#fff;
+/* =========================
+   LAYOUT
+========================= */
+.container {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
 }
 
-body.arabic{
-  background:linear-gradient(135deg,#0a0a0a,#1f1f1f);
+.active {
+  display: flex;
+}
+
+/* =========================
+   THEME SELECTOR
+========================= */
+#themeSelector {
+  flex-direction: column;
+  gap: 15px;
+  text-align: center;
+}
+
+.theme-btn {
+  padding: 15px 20px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* =========================
+   RSVP CARD (LUXURY GLASS)
+========================= */
+.rsvp-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 25px;
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+/* Inputs */
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+}
+
+/* Buttons */
+button {
+  margin-top: 15px;
+  padding: 12px;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Back button */
+.back-btn {
+  background: #333;
+  color: white;
+}
+
+/* Send button */
+.send-btn {
+  background: gold;
+  color: black;
+  font-weight: bold;
+}
+
+/* =========================
+   TEXT STYLES PER THEME
+========================= */
+body.theme-light .rsvp-card {
+  background: #f5f5f5;
+}
+
+body.theme-gold .rsvp-card {
+  border: 1px solid gold;
+}
+
+body.theme-dark .rsvp-card {
+  border: 1px solid #444;
 }
 </style>
 </head>
@@ -131,102 +138,68 @@ body.arabic{
 <body>
 
 <!-- =========================
-     SELECTOR SCREEN
+     THEME SELECTOR SCREEN
 ========================= -->
-<div id="selector">
+<div id="themeSelector" class="container active">
+  <h2>Select Theme</h2>
 
-  <h1>Wedding Experience</h1>
-  <div class="sub">Choose your luxury theme</div>
-
-  <div class="card goldCard" onclick="start('gold')">
-    ✨ Royal Gold<br><small>Luxury cinematic style</small>
-  </div>
-
-  <div class="card whiteCard" onclick="start('white')">
-    🤍 Modern White<br><small>Clean elegant design</small>
-  </div>
-
-  <div class="card arabicCard" onclick="start('arabic')">
-    🕌 Arabic Luxury<br><small>Traditional royal feel</small>
-  </div>
-
+  <button class="theme-btn" onclick="openTheme('theme-dark')">Dark Luxury</button>
+  <button class="theme-btn" onclick="openTheme('theme-gold')">Gold Luxury</button>
+  <button class="theme-btn" onclick="openTheme('theme-light')">Clean White</button>
 </div>
 
 <!-- =========================
      RSVP SCREEN
 ========================= -->
-<div id="app">
-
-  <div class="box">
+<div id="rsvpContainer" class="container">
+  <div class="rsvp-card">
 
     <h2>Wedding RSVP</h2>
 
     <input id="name" placeholder="Name / الاسم" />
 
-    <select id="attend">
+    <select id="attending">
       <option value="Yes">Attending / نعم</option>
       <option value="No">Not Attending / لا</option>
-      <option value="Maybe">Maybe / ربما</option>
     </select>
 
     <input id="guests" type="number" placeholder="Guests / عدد المرافقين" />
 
-    <button onclick="send()">Send via WhatsApp</button>
+    <button class="send-btn" onclick="sendWhatsApp()">Send via WhatsApp</button>
+
+    <button class="back-btn" onclick="backToThemes()">← Back to Themes</button>
 
   </div>
-
 </div>
 
-<!-- =========================
-     JAVASCRIPT (FIXED)
-========================= -->
 <script>
-const phone = "13239259150";
-
-/* SWITCH SCREEN */
-function start(theme){
-
-  localStorage.setItem("theme", theme);
-
+function openTheme(theme) {
   document.body.className = theme;
 
-  document.getElementById("selector").style.display = "none";
-  document.getElementById("app").style.display = "block";
+  document.getElementById("themeSelector").classList.remove("active");
+  document.getElementById("rsvpContainer").classList.add("active");
 }
 
-/* WHATSAPP SEND */
-function send(){
+function backToThemes() {
+  document.getElementById("rsvpContainer").classList.remove("active");
+  document.getElementById("themeSelector").classList.add("active");
+}
 
+/* WhatsApp sender */
+function sendWhatsApp() {
   const name = document.getElementById("name").value;
-  const attend = document.getElementById("attend").value;
+  const attending = document.getElementById("attending").value;
   const guests = document.getElementById("guests").value;
 
-  const msg =
+  const message =
 `Wedding RSVP:
 Name: ${name}
-Attendance: ${attend}
+Attending: ${attending}
 Guests: ${guests}`;
 
-  window.open(
-    `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,
-    "_blank"
-  );
+  const url = "https://wa.me/?text=" + encodeURIComponent(message);
+  window.open(url, "_blank");
 }
-
-/* IMPORTANT FIX: NO AUTO SWITCHING */
-window.onload = () => {
-
-  // ALWAYS start on selector
-  document.getElementById("selector").style.display = "flex";
-  document.getElementById("app").style.display = "none";
-
-  // ONLY apply theme visuals (no screen jump)
-  const saved = localStorage.getItem("theme");
-
-  if(saved){
-    document.body.className = saved;
-  }
-};
 </script>
 
 </body>
