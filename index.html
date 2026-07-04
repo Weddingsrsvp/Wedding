@@ -1,227 +1,108 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>دعوة زفاف</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Cairo:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
-/* =========================
-   BASE
-========================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Arial", sans-serif;
 }
 
 body {
-  direction: rtl;
-  color: white;
-  overflow-x: hidden;
-}
-
-/* =========================
-   BACKGROUND IMAGE (FIXED)
-========================= */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background:
-    linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0.85)),
-    url("https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=2000&q=80");
-  background-size: cover;
-  background-position: center;
-  z-index: -2;
-  filter: contrast(1.1) brightness(0.85);
-}
-
-/* gold glow */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at 30% 20%, rgba(214,178,94,0.15), transparent 45%);
-  z-index: -1;
-}
-
-/* =========================
-   LAYOUT
-========================= */
-.container {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 25px;
-}
-
-/* =========================
-   CARD
-========================= */
-.card {
-  width: 100%;
-  max-width: 520px;
-  text-align: center;
-  padding: 28px;
-  border-radius: 24px;
-  background: rgba(255,255,255,0.07);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(214,178,94,0.25);
-  box-shadow: 0 30px 90px rgba(0,0,0,0.6);
-}
-
-/* =========================
-   TEXT
-========================= */
-h1 {
-  font-size: 30px;
-  margin-bottom: 10px;
-}
-
-p {
-  opacity: 0.85;
-  margin-bottom: 10px;
-  line-height: 1.6;
-}
-
-/* =========================
-   COUNTDOWN
-========================= */
-.countdown {
-  font-size: 22px;
+  height: 100vh;
+  font-family: 'Cairo', sans-serif;
   color: gold;
-  margin: 15px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  /* cinematic background */
+  background: url('https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1950&q=80') center/cover no-repeat;
 }
 
-/* =========================
-   INPUTS
-========================= */
-input, select, textarea {
+/* dark luxury overlay */
+.overlay {
+  position: absolute;
   width: 100%;
-  margin-top: 10px;
-  padding: 12px;
-  border-radius: 12px;
-  border: none;
-  background: rgba(255,255,255,0.08);
-  color: white;
-  outline: none;
+  height: 100%;
+  background: rgba(0,0,0,0.65);
 }
 
-/* =========================
-   BUTTON
-========================= */
-button {
-  width: 100%;
-  margin-top: 14px;
-  padding: 12px;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  background: linear-gradient(90deg, gold, #f5d88b);
-  color: black;
+.card {
+  position: relative;
+  padding: 40px 25px;
+  max-width: 700px;
+  border: 1px solid rgba(255,215,0,0.4);
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(6px);
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(255,215,0,0.15);
 }
 
-/* =========================
-   SMALL TEXT
-========================= */
-.small {
-  font-size: 13px;
-  opacity: 0.7;
-  margin-top: 8px;
+.names {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+.title {
+  font-size: 40px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.subtext {
+  font-size: 18px;
+  margin-bottom: 25px;
+  color: #f5e6b1;
+  line-height: 1.8;
+}
+
+.countdown {
+  font-size: 20px;
+  margin-top: 20px;
+  color: gold;
+  letter-spacing: 2px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="overlay"></div>
 
-  <div class="card">
+<div class="card">
 
-    <!-- TITLE -->
-    <h1>دعوة لحضور حفل زفافنا</h1>
+  <!-- 🔥 Names go here -->
+  <div class="names">
+    [اسم العريس] ❤️ [اسم العروس]
+  </div>
 
-    <p>بكل الحب ندعوكم لمشاركتنا أجمل لحظات حياتنا</p>
+  <!-- removed basmala as requested -->
 
-    <!-- COUNTDOWN -->
-    <div class="countdown" id="countdown"></div>
+  <div class="title">
+    دعوة لحضور حفل زفافنا
+  </div>
 
-    <!-- DETAILS -->
-    <p><b>📅 17 يوليو 2026</b></p>
-    <p><b>📍 قاعة نيسان</b></p>
+  <div class="subtext">
+    بكل الحب ندعوكم لمشاركتنا أجمل لحظات حياتنا<br>
+    حضوركم شرف وسعادة لنا
+  </div>
 
-    <hr style="margin:15px 0; opacity:0.2;">
-
-    <!-- RSVP -->
-    <p><b>RSVP</b></p>
-
-    <input id="name" placeholder="الاسم الكامل" />
-
-    <select id="attending">
-      <option value="Yes">هل ستتمكن من الحضور؟ نعم</option>
-      <option value="No">لا</option>
-    </select>
-
-    <input id="guests" type="number" placeholder="العدد" />
-
-    <textarea id="message" placeholder="رسالة (اختياري)"></textarea>
-
-    <button onclick="send()">إرسال</button>
-
-    <p class="small">يرجى تأكيد الحضور</p>
-
+  <!-- optional countdown placeholder -->
+  <div class="countdown">
+    17 يوم | 14 ساعة | 32 دقيقة
   </div>
 
 </div>
-
-<script>
-
-/* =========================
-   COUNTDOWN (17 JULY 2026)
-========================= */
-const weddingDate = new Date("2026-07-17T00:00:00").getTime();
-
-setInterval(() => {
-  const now = new Date().getTime();
-  const diff = weddingDate - now;
-
-  const days = Math.floor(diff / (1000*60*60*24));
-  const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-  const mins = Math.floor((diff % (1000*60*60)) / (1000*60));
-
-  document.getElementById("countdown").innerText =
-    days + " يوم " + hours + " ساعة " + mins + " دقيقة";
-}, 1000);
-
-/* =========================
-   WHATSAPP SEND
-========================= */
-function send() {
-  const name = document.getElementById("name").value;
-  const attending = document.getElementById("attending").value;
-  const guests = document.getElementById("guests").value;
-  const message = document.getElementById("message").value;
-
-  if (!name) {
-    alert("يرجى إدخال الاسم");
-    return;
-  }
-
-  const text =
-`💍 دعوة زفاف
-الاسم: ${name}
-الحضور: ${attending}
-العدد: ${guests}
-رسالة: ${message}`;
-
-  window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank");
-}
-
-</script>
 
 </body>
 </html>
