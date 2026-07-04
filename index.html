@@ -3,95 +3,84 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Wedding Invitation</title>
+<title>Wedding Experience Selector</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
- 
 <style>
-:root{
-  --gold:#d4af37;
-  --bg:#0b0b10;
-}
-
 body{
   margin:0;
   font-family:"Cairo",sans-serif;
-  background: radial-gradient(circle at top, #1a1a1a, #000);
+  background:#0b0b10;
   color:#fff;
   text-align:center;
 }
 
-.container{
-  max-width:600px;
-  margin:auto;
-  padding:24px;
+/* LANDING */
+#selector{
+  padding:40px 20px;
 }
 
 h1{
-  font-family:"Playfair Display",serif;
-  color:var(--gold);
-  font-size:40px;
-  margin-bottom:5px;
+  font-size:32px;
+  color:#d4af37;
 }
 
-.subtitle{
-  opacity:0.7;
-  margin-bottom:20px;
+.cards{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  max-width:400px;
+  margin:30px auto;
 }
 
 .card{
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:16px;
-  padding:18px;
-  margin-top:16px;
-  backdrop-filter: blur(12px);
+  padding:20px;
+  border-radius:15px;
+  cursor:pointer;
+  transition:0.3s;
+  border:1px solid rgba(255,255,255,0.1);
+}
+
+.card:hover{
+  transform:scale(1.03);
+}
+
+.gold{background:linear-gradient(135deg,#1a1a1a,#3a2f1b);}
+.white{background:linear-gradient(135deg,#ffffff,#cfcfcf); color:#000;}
+.arabic{background:linear-gradient(135deg,#0e0e0e,#1b1b1b);}
+
+/* WEDDING APP */
+#app{
+  display:none;
+  padding:20px;
+}
+
+h2{
+  color:#d4af37;
 }
 
 input,select{
-  width:100%;
+  width:90%;
   padding:12px;
-  margin:8px 0;
+  margin:8px;
   border-radius:10px;
   border:none;
-  outline:none;
-  font-size:14px;
 }
 
 button{
-  width:100%;
-  padding:14px;
-  background:linear-gradient(135deg,var(--gold),#f5e6a4);
+  width:90%;
+  padding:12px;
+  background:#d4af37;
   border:none;
   border-radius:10px;
   font-weight:bold;
   cursor:pointer;
 }
 
-button:hover{
-  transform:scale(1.02);
-}
-
-#qr{
-  display:flex;
-  justify-content:center;
-  margin-top:10px;
-}
-
-.countdown{
-  display:flex;
-  justify-content:space-around;
-  font-size:14px;
-  margin-top:10px;
-  opacity:0.85;
-}
-
-.lang{
-  margin-top:15px;
-  font-size:13px;
-  opacity:0.6;
+.topbar{
+  margin-bottom:20px;
+  opacity:0.7;
   cursor:pointer;
 }
 </style>
@@ -99,53 +88,66 @@ button:hover{
 
 <body>
 
-<div class="container">
+<!-- THEME SELECTOR -->
+<div id="selector">
+  <h1>Choose Your Wedding Experience</h1>
 
-  <h1>Wedding Invitation</h1>
-  <div class="subtitle">We warmly invite you to celebrate with us</div>
+  <div class="cards">
 
-  <!-- COUNTDOWN -->
-  <div class="card">
-    <div>Countdown</div>
-    <div class="countdown" id="countdown">
-      <span id="d"></span>
-      <span id="h"></span>
-      <span id="m"></span>
-      <span id="s"></span>
+    <div class="card gold" onclick="start('gold')">
+      ✨ Royal Gold<br><small>Luxury palace style</small>
     </div>
+
+    <div class="card white" onclick="start('white')">
+      🤍 Modern White<br><small>Clean elegant design</small>
+    </div>
+
+    <div class="card arabic" onclick="start('arabic')">
+      🕌 Arabic Luxury<br><small>Traditional royal feel</small>
+    </div>
+
   </div>
+</div>
 
-  <!-- RSVP -->
-  <div class="card">
-    <input id="name" placeholder="Your Name / الاسم" />
+<!-- APP -->
+<div id="app">
 
-    <select id="attend">
-      <option value="Yes">Attending / نعم</option>
-      <option value="No">Not Attending / لا</option>
-      <option value="Maybe">Maybe / ربما</option>
-    </select>
+  <div class="topbar" onclick="back()">← Back to Themes</div>
 
-    <input id="guests" type="number" placeholder="Number of Guests / عدد المرافقين" />
+  <h2>Wedding RSVP</h2>
 
-    <button onclick="sendWhatsApp()">Send RSVP</button>
-  </div>
+  <input id="name" placeholder="Name / الاسم" />
 
-  <!-- QR -->
-  <div class="card">
-    <div>Scan to RSVP</div>
-    <div id="qr"></div>
-    <button onclick="downloadQR()">Download QR</button>
-  </div>
+  <select id="attend">
+    <option value="Yes">Attending / نعم</option>
+    <option value="No">Not Attending / لا</option>
+    <option value="Maybe">Maybe / ربما</option>
+  </select>
 
-  <div class="lang" onclick="toggleLang()">Toggle Language / تبديل اللغة</div>
+  <input id="guests" type="number" placeholder="Guests / عدد المرافقين" />
+
+  <button onclick="send()">Send via WhatsApp</button>
 
 </div>
 
 <script>
 const phone = "13239259150";
 
-/* WhatsApp RSVP */
-function sendWhatsApp(){
+/* START THEME */
+function start(theme){
+  localStorage.setItem("theme", theme);
+  document.getElementById("selector").style.display="none";
+  document.getElementById("app").style.display="block";
+}
+
+/* BACK */
+function back(){
+  document.getElementById("selector").style.display="block";
+  document.getElementById("app").style.display="none";
+}
+
+/* WHATSAPP */
+function send(){
   const name = document.getElementById("name").value;
   const attend = document.getElementById("attend").value;
   const guests = document.getElementById("guests").value;
@@ -156,42 +158,16 @@ Name: ${name}
 Attendance: ${attend}
 Guests: ${guests}`;
 
-  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,"_blank");
 }
 
-/* QR CODE (dynamic) */
-const qr = new QRCode(document.getElementById("qr"), {
-  text: window.location.href,
-  width:160,
-  height:160
-});
-
-/* Download QR */
-function downloadQR(){
-  const img = document.querySelector("#qr img");
-  const a = document.createElement("a");
-  a.href = img.src;
-  a.download = "wedding-qr.png";
-  a.click();
+/* auto load theme */
+window.onload = () => {
+  const saved = localStorage.getItem("theme");
+  if(saved){
+    start(saved);
+  }
 }
-
-/* RTL toggle */
-function toggleLang(){
-  document.body.dir = document.body.dir === "rtl" ? "ltr" : "rtl";
-}
-
-/* Countdown (edit date here) */
-const weddingDate = new Date("2026-12-31").getTime();
-
-setInterval(()=>{
-  const now = new Date().getTime();
-  const diff = weddingDate - now;
-
-  document.getElementById("d").innerText = Math.floor(diff/(1000*60*60*24))+"d";
-  document.getElementById("h").innerText = Math.floor((diff%(1000*60*60*24))/(1000*60*60))+"h";
-  document.getElementById("m").innerText = Math.floor((diff%(1000*60*60))/(1000*60))+"m";
-  document.getElementById("s").innerText = Math.floor((diff%(1000*60))/1000)+"s";
-},1000);
 </script>
 
 </body>
