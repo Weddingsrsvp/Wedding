@@ -3,9 +3,20 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Cinematic Wedding RSVP</title>
+<title>Cinematic RSVP V5</title>
 
 <style>
+/* =========================
+   DESIGN TOKENS (SINGLE SOURCE OF TRUTH)
+========================= */
+:root {
+  --bg1: #0a0a0a;
+  --bg2: #000;
+  --gold: #d6b25e;
+  --text: #ffffff;
+  --glass: rgba(255,255,255,0.06);
+}
+
 /* =========================
    BASE RESET
 ========================= */
@@ -17,47 +28,43 @@
 }
 
 body {
+  background: radial-gradient(circle at top, var(--bg1), var(--bg2));
+  color: var(--text);
   overflow-x: hidden;
 }
 
 /* =========================
-   CINEMATIC BACKGROUND
+   BACKGROUND LAYERS
 ========================= */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(255,215,0,0.12), transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(255,255,255,0.06), transparent 50%),
-    linear-gradient(135deg, #0a0a0a, #000);
-  z-index: -1;
-}
-
-/* glow */
 .glow {
   position: fixed;
-  width: 300px;
-  height: 300px;
-  background: gold;
-  filter: blur(120px);
+  width: 400px;
+  height: 400px;
+  background: var(--gold);
+  filter: blur(140px);
   opacity: 0.12;
-  top: 15%;
+  top: 10%;
   left: 10%;
+  z-index: 0;
 }
 
 /* =========================
-   SCREEN SYSTEM
+   APP CONTAINER
+========================= */
+#app {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================
+   SCREENS (ROUTER SYSTEM)
 ========================= */
 .screen {
   display: none;
   min-height: 100vh;
   justify-content: center;
   align-items: center;
-  padding: 25px;
+  padding: 24px;
 }
 
 .screen.active {
@@ -65,33 +72,32 @@ body::before {
 }
 
 /* =========================
-   CARD
+   CARD SYSTEM
 ========================= */
 .card {
   width: 100%;
-  max-width: 450px;
-  padding: 28px;
-  border-radius: 22px;
+  max-width: 460px;
+  padding: 30px;
+  border-radius: 24px;
+  background: var(--glass);
   backdrop-filter: blur(22px);
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,215,0,0.2);
-  box-shadow: 0 25px 70px rgba(0,0,0,0.6);
+  border: 1px solid rgba(214,178,94,0.25);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
   text-align: center;
-  color: white;
 }
 
 /* =========================
-   TITLE
+   TYPOGRAPHY
 ========================= */
 h1 {
-  font-size: 26px;
+  font-size: 28px;
   margin-bottom: 10px;
   letter-spacing: 1px;
 }
 
 p {
   opacity: 0.7;
-  margin-bottom: 15px;
+  margin-bottom: 16px;
 }
 
 /* =========================
@@ -101,11 +107,10 @@ input, select {
   width: 100%;
   padding: 14px;
   margin-top: 12px;
-  border-radius: 12px;
+  border-radius: 14px;
   border: none;
   outline: none;
-  font-size: 14px;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.08);
   color: white;
 }
 
@@ -116,10 +121,9 @@ button {
   width: 100%;
   padding: 14px;
   margin-top: 14px;
-  border-radius: 12px;
+  border-radius: 14px;
   border: none;
   cursor: pointer;
-  font-size: 15px;
   transition: 0.2s ease;
 }
 
@@ -128,23 +132,22 @@ button:active {
 }
 
 .primary {
-  background: linear-gradient(90deg, gold, #ffdf70);
+  background: linear-gradient(90deg, var(--gold), #f2d58a);
   color: black;
   font-weight: bold;
 }
 
 .secondary {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.08);
   color: white;
 }
 
 /* =========================
-   SIMPLE LAYOUT FIX
+   SMALL TEXT
 ========================= */
 .small {
   font-size: 13px;
   opacity: 0.6;
-  margin-top: 8px;
 }
 </style>
 </head>
@@ -153,71 +156,84 @@ button:active {
 
 <div class="glow"></div>
 
-<!-- =========================
-   HERO SCREEN
-========================= -->
-<div id="hero" class="screen active">
-  <div class="card">
-    <h1>Wedding Invitation</h1>
-    <p>Tap to enter the experience</p>
-    <button class="primary" onclick="enter()">Enter</button>
+<div id="app">
+
+  <!-- =========================
+       HERO SCREEN
+  ========================== -->
+  <div id="screen-hero" class="screen active">
+    <div class="card">
+      <h1>Wedding Invitation</h1>
+      <p>Experience begins here</p>
+      <button class="primary" onclick="go('rsvp')">Enter</button>
+    </div>
   </div>
-</div>
 
-<!-- =========================
-   RSVP SCREEN
-========================= -->
-<div id="rsvp" class="screen">
-  <div class="card">
+  <!-- =========================
+       RSVP SCREEN
+  ========================== -->
+  <div id="screen-rsvp" class="screen">
+    <div class="card">
 
-    <h1>RSVP</h1>
-    <p class="small">We look forward to celebrating with you</p>
+      <h1>RSVP</h1>
+      <p class="small">We look forward to celebrating with you</p>
 
-    <input id="name" placeholder="Name / الاسم" />
+      <input id="name" placeholder="Name / الاسم" />
 
-    <select id="attending">
-      <option value="Yes">Attending / نعم</option>
-      <option value="No">Not Attending / لا</option>
-    </select>
+      <select id="attending">
+        <option value="Yes">Attending / نعم</option>
+        <option value="No">Not Attending / لا</option>
+      </select>
 
-    <input id="guests" type="number" placeholder="Guests / عدد المرافقين" />
+      <input id="guests" type="number" placeholder="Guests / عدد المرافقين" />
 
-    <button class="primary" onclick="send()">Send via WhatsApp</button>
-    <button class="secondary" onclick="back()">← Back</button>
+      <button class="primary" onclick="send()">Send via WhatsApp</button>
+      <button class="secondary" onclick="go('hero')">Back</button>
 
+    </div>
   </div>
+
 </div>
 
 <script>
+
 /* =========================
-   NAVIGATION FIXED
+   STATE ROUTER (CORE ARCHITECTURE)
 ========================= */
-function enter() {
-  document.getElementById("hero").classList.remove("active");
-  document.getElementById("rsvp").classList.add("active");
-}
+const state = {
+  screen: "hero"
+};
 
-function back() {
-  document.getElementById("rsvp").classList.remove("active");
-  document.getElementById("hero").classList.add("active");
+/* =========================
+   SCREEN CONTROLLER (ONLY ONE PLACE CONTROLS UI)
+========================= */
+function go(screen) {
+  state.screen = screen;
+
+  document.querySelectorAll(".screen").forEach(s => {
+    s.classList.remove("active");
+  });
+
+  document.getElementById("screen-" + screen).classList.add("active");
 }
 
 /* =========================
-   WHATSAPP SEND
+   WHATSAPP SUBMISSION
 ========================= */
 function send() {
   const name = document.getElementById("name").value;
   const attending = document.getElementById("attending").value;
   const guests = document.getElementById("guests").value;
 
-  const msg =
+  const message =
 `💍 Wedding RSVP
 Name: ${name}
 Attending: ${attending}
 Guests: ${guests}`;
 
-  window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
+  window.open("https://wa.me/?text=" + encodeURIComponent(message), "_blank");
 }
+
 </script>
 
 </body>
