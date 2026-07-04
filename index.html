@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Luxury Wedding Experience V9</title>
+<title>دعوة زفاف</title>
 
 <style>
 /* =========================
@@ -13,16 +13,17 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  font-family: "Arial", sans-serif;
 }
 
 body {
+  direction: rtl;
   color: white;
   overflow-x: hidden;
 }
 
 /* =========================
-   LUXURY BACKGROUND IMAGE
+   BACKGROUND IMAGE (FIXED)
 ========================= */
 body::before {
   content: "";
@@ -30,113 +31,75 @@ body::before {
   inset: 0;
   background:
     linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0.85)),
-    url("https://images.unsplash.com/photo-1529634806980-85c3dd6d7a6a?auto=format&fit=crop&w=2000&q=80");
+    url("https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=2000&q=80");
   background-size: cover;
   background-position: center;
   z-index: -2;
   filter: contrast(1.1) brightness(0.85);
 }
 
-/* gold cinematic glow */
+/* gold glow */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at 20% 20%, rgba(214,178,94,0.12), transparent 45%);
+  background: radial-gradient(circle at 30% 20%, rgba(214,178,94,0.15), transparent 45%);
   z-index: -1;
-  pointer-events: none;
 }
 
 /* =========================
-   NAVIGATION (APPLE STYLE)
+   LAYOUT
 ========================= */
-nav {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-  padding: 10px;
-  background: rgba(0,0,0,0.35);
-  backdrop-filter: blur(18px);
-  z-index: 999;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-  font-size: 12px;
-  opacity: 0.75;
-  transition: 0.2s;
-}
-
-nav a:hover {
-  opacity: 1;
-  color: gold;
-}
-
-/* =========================
-   SECTIONS
-========================= */
-section {
+.container {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 50px 18px;
+  padding: 25px;
 }
 
 /* =========================
-   CARD (LUXURY GLASS)
+   CARD
 ========================= */
 .card {
-  max-width: 680px;
   width: 100%;
+  max-width: 520px;
   text-align: center;
-  padding: 30px;
-  border-radius: 26px;
-  background: rgba(255,255,255,0.06);
-  backdrop-filter: blur(22px);
-  border: 1px solid rgba(214,178,94,0.22);
-  box-shadow: 0 35px 100px rgba(0,0,0,0.6);
+  padding: 28px;
+  border-radius: 24px;
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(214,178,94,0.25);
+  box-shadow: 0 30px 90px rgba(0,0,0,0.6);
 }
 
 /* =========================
-   TYPOGRAPHY (FIXED SPACING)
+   TEXT
 ========================= */
 h1 {
-  font-size: 44px;
-  letter-spacing: 1px;
-  margin-bottom: 8px;
+  font-size: 30px;
+  margin-bottom: 10px;
 }
 
 p {
-  opacity: 0.75;
-  font-size: 17px;
-  line-height: 1.4;
-  margin-bottom: 6px;
+  opacity: 0.85;
+  margin-bottom: 10px;
+  line-height: 1.6;
 }
 
 /* =========================
-   BUTTON
+   COUNTDOWN
 ========================= */
-button {
-  margin-top: 16px;
-  padding: 12px 22px;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-  background: linear-gradient(90deg, gold, #f5d88b);
-  color: black;
-  font-weight: bold;
+.countdown {
+  font-size: 22px;
+  color: gold;
+  margin: 15px 0;
 }
 
 /* =========================
    INPUTS
 ========================= */
-input, select {
+input, select, textarea {
   width: 100%;
   margin-top: 10px;
   padding: 12px;
@@ -144,131 +107,120 @@ input, select {
   border: none;
   background: rgba(255,255,255,0.08);
   color: white;
+  outline: none;
 }
 
 /* =========================
-   COUNTDOWN
+   BUTTON
 ========================= */
-.countdown {
-  font-size: 26px;
-  margin-top: 10px;
-  color: gold;
+button {
+  width: 100%;
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  background: linear-gradient(90deg, gold, #f5d88b);
+  color: black;
 }
 
 /* =========================
    SMALL TEXT
 ========================= */
 .small {
-  opacity: 0.6;
   font-size: 13px;
-  margin-top: 6px;
+  opacity: 0.7;
+  margin-top: 8px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="#hero">Home</a>
-  <a href="#story">Story</a>
-  <a href="#details">Details</a>
-  <a href="#venue">Venue</a>
-  <a href="#rsvp">RSVP</a>
-</nav>
+<div class="container">
 
-<!-- HERO -->
-<section id="hero">
   <div class="card">
-    <h1>Wedding Invitation</h1>
-    <p>A refined luxury wedding experience</p>
-  </div>
-</section>
 
-<!-- STORY -->
-<section id="story">
-  <div class="card">
-    <h1>Our Story</h1>
-    <p>Every moment brought us closer to this day.</p>
-  </div>
-</section>
+    <!-- TITLE -->
+    <h1>دعوة لحضور حفل زفافنا</h1>
 
-<!-- DETAILS -->
-<section id="details">
-  <div class="card">
-    <h1>Event Details</h1>
-    <p>Date: <b>Coming Soon</b></p>
+    <p>بكل الحب ندعوكم لمشاركتنا أجمل لحظات حياتنا</p>
 
-    <div class="countdown" id="countdown">Loading...</div>
-    <p class="small">Counting down to our special day</p>
-  </div>
-</section>
+    <!-- COUNTDOWN -->
+    <div class="countdown" id="countdown"></div>
 
-<!-- VENUE -->
-<section id="venue">
-  <div class="card">
-    <h1>Venue</h1>
-    <p>A carefully selected luxury destination.</p>
-    <p class="small">(Map integration ready)</p>
-  </div>
-</section>
+    <!-- DETAILS -->
+    <p><b>📅 17 يوليو 2026</b></p>
+    <p><b>📍 قاعة نيسان</b></p>
 
-<!-- RSVP -->
-<section id="rsvp">
-  <div class="card">
-    <h1>RSVP</h1>
+    <hr style="margin:15px 0; opacity:0.2;">
 
-    <input id="name" placeholder="Name / الاسم" />
+    <!-- RSVP -->
+    <p><b>RSVP</b></p>
+
+    <input id="name" placeholder="الاسم الكامل" />
 
     <select id="attending">
-      <option value="Yes">Attending / نعم</option>
-      <option value="No">Not Attending / لا</option>
+      <option value="Yes">هل ستتمكن من الحضور؟ نعم</option>
+      <option value="No">لا</option>
     </select>
 
-    <input id="guests" type="number" placeholder="Guests / عدد المرافقين" />
+    <input id="guests" type="number" placeholder="العدد" />
 
-    <button onclick="send()">Send RSVP</button>
+    <textarea id="message" placeholder="رسالة (اختياري)"></textarea>
+
+    <button onclick="send()">إرسال</button>
+
+    <p class="small">يرجى تأكيد الحضور</p>
+
   </div>
-</section>
+
+</div>
 
 <script>
 
 /* =========================
-   COUNTDOWN
+   COUNTDOWN (17 JULY 2026)
 ========================= */
-const weddingDate = new Date("2026-12-31").getTime();
+const weddingDate = new Date("2026-07-17T00:00:00").getTime();
 
 setInterval(() => {
   const now = new Date().getTime();
   const diff = weddingDate - now;
 
   const days = Math.floor(diff / (1000*60*60*24));
+  const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+  const mins = Math.floor((diff % (1000*60*60)) / (1000*60));
 
   document.getElementById("countdown").innerText =
-    days + " days remaining";
+    days + " يوم " + hours + " ساعة " + mins + " دقيقة";
 }, 1000);
 
 /* =========================
-   RSVP SEND
+   WHATSAPP SEND
 ========================= */
 function send() {
   const name = document.getElementById("name").value;
   const attending = document.getElementById("attending").value;
   const guests = document.getElementById("guests").value;
+  const message = document.getElementById("message").value;
 
   if (!name) {
-    alert("Please enter your name");
+    alert("يرجى إدخال الاسم");
     return;
   }
 
-  const msg =
-`💍 Wedding RSVP
-Name: ${name}
-Attending: ${attending}
-Guests: ${guests}`;
+  const text =
+`💍 دعوة زفاف
+الاسم: ${name}
+الحضور: ${attending}
+العدد: ${guests}
+رسالة: ${message}`;
 
-  window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
+  window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank");
 }
+
 </script>
 
 </body>
