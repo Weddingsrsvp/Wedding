@@ -3,134 +3,116 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Wedding Experience | Luxury Edition</title>
+<title>Wedding Experience Builder</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
 <style>
-:root{
-  --gold:#d4af37;
-}
-
-*{
-  box-sizing:border-box;
-}
-
 body{
   margin:0;
-  transition:0.6s ease;
-  overflow-x:hidden;
+  font-family:Inter, sans-serif;
+  transition:0.5s ease;
+  background:#0b0b10;
+  color:#fff;
 }
 
-/* =========================
-   GLOBAL LAYOUT
-========================= */
-.page{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  text-align:center;
-}
-
-.hidden{display:none;}
-
-/* =========================
-   GLASS CARD
-========================= */
-.card{
-  width:100%;
-  max-width:420px;
-  padding:22px;
-  border-radius:22px;
-  backdrop-filter: blur(18px);
-  border:1px solid rgba(255,255,255,0.12);
-  animation:fadeUp 0.8s ease;
-}
-
-@keyframes fadeUp{
-  from{opacity:0; transform:translateY(20px);}
-  to{opacity:1; transform:translateY(0);}
+/* IMPORTANT: default state */
+#app{
+  display:none;
 }
 
 /* =========================
    LANDING
 ========================= */
-.title{
-  font-size:30px;
-  font-weight:700;
-  margin-bottom:8px;
+#selector{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
 }
 
-.subtitle{
+h1{
+  color:#d4af37;
+  margin-bottom:10px;
+}
+
+.sub{
   opacity:0.6;
   margin-bottom:25px;
 }
 
-.option{
+.card{
+  width:100%;
+  max-width:350px;
   padding:16px;
-  border-radius:16px;
   margin:10px 0;
+  border-radius:14px;
   cursor:pointer;
   transition:0.3s;
-  text-align:left;
   border:1px solid rgba(255,255,255,0.1);
+  text-align:left;
 }
 
-.option:hover{
+.card:hover{
   transform:scale(1.02);
 }
 
+.goldCard{background:linear-gradient(135deg,#1a1a1a,#2c2412);}
+.whiteCard{background:#fff; color:#111;}
+.arabicCard{background:linear-gradient(135deg,#0e0e0e,#1b1b1b);}
+
 /* =========================
-   INPUTS
+   APP
 ========================= */
+#app{
+  min-height:100vh;
+  padding:30px 20px;
+  text-align:center;
+}
+
+.box{
+  max-width:400px;
+  margin:auto;
+  background:rgba(255,255,255,0.06);
+  padding:20px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,0.1);
+}
+
 input,select{
   width:100%;
-  padding:14px;
+  padding:12px;
   margin:8px 0;
-  border-radius:12px;
+  border-radius:10px;
   border:none;
   outline:none;
-  font-size:14px;
 }
 
 button{
   width:100%;
-  padding:14px;
+  padding:12px;
   border:none;
-  border-radius:12px;
-  font-weight:700;
+  border-radius:10px;
+  background:#d4af37;
+  font-weight:bold;
   cursor:pointer;
-  margin-top:10px;
 }
 
 /* =========================
    THEMES
 ========================= */
-
-/* GOLD - CINEMATIC LUXURY */
 body.gold{
   background:radial-gradient(circle at top,#1a1a1a,#000);
-  color:#fff;
-  font-family:"Playfair Display",serif;
 }
 
-body.gold button{
-  background:linear-gradient(135deg,#d4af37,#f5e6a4);
-  color:#000;
-}
-
-/* WHITE - MODERN LUXURY */
 body.white{
-  background:#f6f6f6;
+  background:#f5f5f5;
   color:#111;
-  font-family:"Inter",sans-serif;
 }
 
-body.white .card{
+body.white .box{
   background:#fff;
   border:1px solid #ddd;
 }
@@ -140,20 +122,8 @@ body.white button{
   color:#fff;
 }
 
-/* ARABIC - ROYAL DARK */
 body.arabic{
   background:linear-gradient(135deg,#0a0a0a,#1f1f1f);
-  color:#fff;
-  font-family:"Cairo",sans-serif;
-}
-
-/* =========================
-   QR BOX
-========================= */
-#qr{
-  margin-top:15px;
-  display:flex;
-  justify-content:center;
 }
 </style>
 </head>
@@ -161,65 +131,70 @@ body.arabic{
 <body>
 
 <!-- =========================
-   LANDING
+     SELECTOR SCREEN
 ========================= -->
-<div id="selector" class="page">
-  <div class="card">
+<div id="selector">
 
-    <div class="title">Wedding Experience</div>
-    <div class="subtitle">Choose your luxury theme</div>
+  <h1>Wedding Experience</h1>
+  <div class="sub">Choose your luxury theme</div>
 
-    <div class="option" onclick="start('gold')">✨ Royal Gold<br><small>cinematic luxury experience</small></div>
-    <div class="option" onclick="start('white')">🤍 Modern White<br><small>clean premium UI</small></div>
-    <div class="option" onclick="start('arabic')">🕌 Arabic Luxury<br><small>royal traditional style</small></div>
-
+  <div class="card goldCard" onclick="start('gold')">
+    ✨ Royal Gold<br><small>Luxury cinematic style</small>
   </div>
+
+  <div class="card whiteCard" onclick="start('white')">
+    🤍 Modern White<br><small>Clean elegant design</small>
+  </div>
+
+  <div class="card arabicCard" onclick="start('arabic')">
+    🕌 Arabic Luxury<br><small>Traditional royal feel</small>
+  </div>
+
 </div>
 
 <!-- =========================
-   APP
+     RSVP SCREEN
 ========================= -->
-<div id="app" class="page hidden">
-  <div class="card">
+<div id="app">
 
-    <div class="title">Wedding RSVP</div>
+  <div class="box">
 
-    <input id="name" placeholder="Name / الاسم">
-    
+    <h2>Wedding RSVP</h2>
+
+    <input id="name" placeholder="Name / الاسم" />
+
     <select id="attend">
       <option value="Yes">Attending / نعم</option>
       <option value="No">Not Attending / لا</option>
       <option value="Maybe">Maybe / ربما</option>
     </select>
 
-    <input id="guests" type="number" placeholder="Guests / عدد المرافقين">
+    <input id="guests" type="number" placeholder="Guests / عدد المرافقين" />
 
     <button onclick="send()">Send via WhatsApp</button>
 
-    <div id="qr"></div>
-
   </div>
+
 </div>
 
+<!-- =========================
+     JAVASCRIPT (FIXED)
+========================= -->
 <script>
 const phone = "13239259150";
 
-/* =========================
-   START SYSTEM (NO FLICKER)
-========================= */
+/* SWITCH SCREEN */
 function start(theme){
+
   localStorage.setItem("theme", theme);
+
   document.body.className = theme;
 
-  document.getElementById("selector").classList.add("hidden");
-  document.getElementById("app").classList.remove("hidden");
-
-  generateQR();
+  document.getElementById("selector").style.display = "none";
+  document.getElementById("app").style.display = "block";
 }
 
-/* =========================
-   WHATSAPP
-========================= */
+/* WHATSAPP SEND */
 function send(){
 
   const name = document.getElementById("name").value;
@@ -238,28 +213,18 @@ Guests: ${guests}`;
   );
 }
 
-/* =========================
-   QR CODE (DYNAMIC)
-========================= */
-function generateQR(){
-  const qr = document.getElementById("qr");
-  qr.innerHTML = "";
-  new QRCode(qr, {
-    text: window.location.href,
-    width: 140,
-    height: 140
-  });
-}
-
-/* =========================
-   AUTO LOAD SAFE STATE
-========================= */
+/* IMPORTANT FIX: NO AUTO SWITCHING */
 window.onload = () => {
 
+  // ALWAYS start on selector
+  document.getElementById("selector").style.display = "flex";
+  document.getElementById("app").style.display = "none";
+
+  // ONLY apply theme visuals (no screen jump)
   const saved = localStorage.getItem("theme");
 
-  if(saved === "gold" || saved === "white" || saved === "arabic"){
-    start(saved);
+  if(saved){
+    document.body.className = saved;
   }
 };
 </script>
