@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Wedding RSVP</title>
+<title>Wedding RSVP Ultra Luxury</title>
 
 <style>
 /* =========================
-   BASE RESET
+   BASE
 ========================= */
 * {
   margin: 0;
@@ -17,147 +17,196 @@
 }
 
 body {
-  transition: 0.4s ease;
+  transition: 0.5s ease;
+  overflow-x: hidden;
 }
 
 /* =========================
    THEMES
 ========================= */
 body.theme-dark {
-  background: #0f0f0f;
+  background: radial-gradient(circle at top, #1a1a1a, #000);
   color: white;
 }
 
 body.theme-gold {
-  background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
-  color: gold;
+  background: radial-gradient(circle at top, #1a140a, #000);
+  color: #f5d06f;
 }
 
 body.theme-light {
-  background: #ffffff;
+  background: #f7f7f7;
   color: #111;
 }
 
 /* =========================
-   LAYOUT
+   SCREEN SYSTEM
 ========================= */
-.container {
+.screen {
   display: none;
+  min-height: 100vh;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  padding: 20px;
+  padding: 25px;
+  animation: fade 0.5s ease;
 }
 
-.active {
+.screen.active {
   display: flex;
 }
 
-/* =========================
-   THEME SELECTOR
-========================= */
-#themeSelector {
-  flex-direction: column;
-  gap: 15px;
-  text-align: center;
-}
-
-.theme-btn {
-  padding: 15px 20px;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 16px;
+@keyframes fade {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 /* =========================
-   RSVP CARD (LUXURY GLASS)
+   TITLE
 ========================= */
-.rsvp-card {
+.title {
+  font-size: 26px;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+  animation: glow 2.5s infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 5px rgba(255,215,0,0.2); }
+  to { text-shadow: 0 0 20px rgba(255,215,0,0.6); }
+}
+
+/* =========================
+   CARDS
+========================= */
+.card {
   width: 100%;
   max-width: 420px;
   padding: 25px;
-  border-radius: 20px;
-  backdrop-filter: blur(12px);
+  border-radius: 22px;
+  backdrop-filter: blur(18px);
   background: rgba(255,255,255,0.08);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
   text-align: center;
+  transform: translateY(0);
+  transition: 0.3s ease;
 }
 
-/* Inputs */
+.card:hover {
+  transform: translateY(-3px);
+}
+
+/* =========================
+   INPUTS
+========================= */
 input, select {
   width: 100%;
   padding: 12px;
-  margin-top: 10px;
-  border-radius: 10px;
+  margin-top: 12px;
+  border-radius: 12px;
   border: none;
   outline: none;
+  font-size: 14px;
 }
 
-/* Buttons */
+/* =========================
+   BUTTONS
+========================= */
 button {
-  margin-top: 15px;
-  padding: 12px;
   width: 100%;
+  padding: 12px;
+  margin-top: 14px;
+  border-radius: 12px;
   border: none;
-  border-radius: 10px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 15px;
+  transition: 0.2s ease;
 }
 
-/* Back button */
-.back-btn {
-  background: #333;
-  color: white;
+button:active {
+  transform: scale(0.96);
 }
 
-/* Send button */
-.send-btn {
+.primary {
   background: gold;
   color: black;
   font-weight: bold;
 }
 
+.secondary {
+  background: #222;
+  color: white;
+}
+
 /* =========================
-   TEXT STYLES PER THEME
+   THEME BUTTONS
 ========================= */
-body.theme-light .rsvp-card {
-  background: #f5f5f5;
+.theme-btn {
+  margin: 10px 0;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  width: 100%;
 }
 
-body.theme-gold .rsvp-card {
-  border: 1px solid gold;
+/* =========================
+   GLASS THEME FIXES
+========================= */
+body.theme-light .card {
+  background: white;
 }
 
-body.theme-dark .rsvp-card {
-  border: 1px solid #444;
+body.theme-dark .card {
+  border: 1px solid #333;
+}
+
+body.theme-gold .card {
+  border: 1px solid rgba(245, 208, 111, 0.4);
+}
+
+/* =========================
+   CONFETTI CANVAS
+========================= */
+#confetti {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 999;
 }
 </style>
 </head>
 
 <body>
 
-<!-- =========================
-     THEME SELECTOR SCREEN
-========================= -->
-<div id="themeSelector" class="container active">
-  <h2>Select Theme</h2>
+<canvas id="confetti"></canvas>
 
-  <button class="theme-btn" onclick="openTheme('theme-dark')">Dark Luxury</button>
-  <button class="theme-btn" onclick="openTheme('theme-gold')">Gold Luxury</button>
-  <button class="theme-btn" onclick="openTheme('theme-light')">Clean White</button>
+<!-- =========================
+   THEME SCREEN
+========================= -->
+<div id="themeScreen" class="screen active">
+  <div class="card">
+    <div class="title">Choose Your Luxury Theme</div>
+
+    <button class="theme-btn" onclick="selectTheme('theme-dark')">Midnight Black Luxury</button>
+    <button class="theme-btn" onclick="selectTheme('theme-gold')">Royal Gold Luxury</button>
+    <button class="theme-btn" onclick="selectTheme('theme-light')">Elegant White Clean</button>
+  </div>
 </div>
 
 <!-- =========================
-     RSVP SCREEN
+   RSVP SCREEN
 ========================= -->
-<div id="rsvpContainer" class="container">
-  <div class="rsvp-card">
+<div id="rsvpScreen" class="screen">
+  <div class="card">
 
-    <h2>Wedding RSVP</h2>
+    <div class="title">Wedding RSVP</div>
 
     <input id="name" placeholder="Name / الاسم" />
-
+    
     <select id="attending">
       <option value="Yes">Attending / نعم</option>
       <option value="No">Not Attending / لا</option>
@@ -165,40 +214,91 @@ body.theme-dark .rsvp-card {
 
     <input id="guests" type="number" placeholder="Guests / عدد المرافقين" />
 
-    <button class="send-btn" onclick="sendWhatsApp()">Send via WhatsApp</button>
-
-    <button class="back-btn" onclick="backToThemes()">← Back to Themes</button>
+    <button class="primary" onclick="sendRSVP()">Send via WhatsApp</button>
+    <button class="secondary" onclick="back()">← Back</button>
 
   </div>
 </div>
 
 <script>
-function openTheme(theme) {
+let currentTheme = "theme-dark";
+
+/* =========================
+   THEME SELECT
+========================= */
+function selectTheme(theme) {
+  currentTheme = theme;
   document.body.className = theme;
 
-  document.getElementById("themeSelector").classList.remove("active");
-  document.getElementById("rsvpContainer").classList.add("active");
+  document.getElementById("themeScreen").classList.remove("active");
+  document.getElementById("rsvpScreen").classList.add("active");
 }
 
-function backToThemes() {
-  document.getElementById("rsvpContainer").classList.remove("active");
-  document.getElementById("themeSelector").classList.add("active");
+/* =========================
+   BACK
+========================= */
+function back() {
+  document.getElementById("rsvpScreen").classList.remove("active");
+  document.getElementById("themeScreen").classList.add("active");
 }
 
-/* WhatsApp sender */
-function sendWhatsApp() {
+/* =========================
+   WHATSAPP
+========================= */
+function sendRSVP() {
   const name = document.getElementById("name").value;
   const attending = document.getElementById("attending").value;
   const guests = document.getElementById("guests").value;
 
-  const message =
-`Wedding RSVP:
+  const msg =
+`💍 Wedding RSVP
 Name: ${name}
 Attending: ${attending}
 Guests: ${guests}`;
 
-  const url = "https://wa.me/?text=" + encodeURIComponent(message);
-  window.open(url, "_blank");
+  window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
+
+  launchConfetti();
+}
+
+/* =========================
+   CONFETTI (SIMPLE LUXURY EFFECT)
+========================= */
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let pieces = [];
+
+function launchConfetti() {
+  pieces = [];
+  for (let i = 0; i < 120; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * -canvas.height,
+      r: Math.random() * 6 + 2,
+      d: Math.random() * 2 + 1,
+      color: Math.random() > 0.5 ? "gold" : "white"
+    });
+  }
+  requestAnimationFrame(draw);
+}
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  pieces.forEach(p => {
+    ctx.fillStyle = p.color;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fill();
+    p.y += p.d * 4;
+  });
+
+  if (pieces[0]?.y < canvas.height) {
+    requestAnimationFrame(draw);
+  }
 }
 </script>
 
