@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Wedding RSVP Ultra Luxury</title>
- 
+<title>Cinematic Wedding RSVP</title>
+
 <style>
 /* =========================
-   BASE
+   BASE RESET
 ========================= */
 * {
   margin: 0;
@@ -17,26 +17,36 @@
 }
 
 body {
-  transition: 0.5s ease;
   overflow-x: hidden;
 }
 
 /* =========================
-   THEMES
+   CINEMATIC BACKGROUND
 ========================= */
-body.theme-dark {
-  background: radial-gradient(circle at top, #1a1a1a, #000);
-  color: white;
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,215,0,0.12), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(255,255,255,0.06), transparent 50%),
+    linear-gradient(135deg, #0a0a0a, #000);
+  z-index: -1;
 }
 
-body.theme-gold {
-  background: radial-gradient(circle at top, #1a140a, #000);
-  color: #f5d06f;
-}
-
-body.theme-light {
-  background: #f7f7f7;
-  color: #111;
+/* glow */
+.glow {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  background: gold;
+  filter: blur(120px);
+  opacity: 0.12;
+  top: 15%;
+  left: 10%;
 }
 
 /* =========================
@@ -48,51 +58,40 @@ body.theme-light {
   justify-content: center;
   align-items: center;
   padding: 25px;
-  animation: fade 0.5s ease;
 }
 
 .screen.active {
   display: flex;
 }
 
-@keyframes fade {
-  from { opacity: 0; transform: scale(0.98); }
-  to { opacity: 1; transform: scale(1); }
+/* =========================
+   CARD
+========================= */
+.card {
+  width: 100%;
+  max-width: 450px;
+  padding: 28px;
+  border-radius: 22px;
+  backdrop-filter: blur(22px);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,215,0,0.2);
+  box-shadow: 0 25px 70px rgba(0,0,0,0.6);
+  text-align: center;
+  color: white;
 }
 
 /* =========================
    TITLE
 ========================= */
-.title {
+h1 {
   font-size: 26px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   letter-spacing: 1px;
-  animation: glow 2.5s infinite alternate;
 }
 
-@keyframes glow {
-  from { text-shadow: 0 0 5px rgba(255,215,0,0.2); }
-  to { text-shadow: 0 0 20px rgba(255,215,0,0.6); }
-}
-
-/* =========================
-   CARDS
-========================= */
-.card {
-  width: 100%;
-  max-width: 420px;
-  padding: 25px;
-  border-radius: 22px;
-  backdrop-filter: blur(18px);
-  background: rgba(255,255,255,0.08);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-  text-align: center;
-  transform: translateY(0);
-  transition: 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-3px);
+p {
+  opacity: 0.7;
+  margin-bottom: 15px;
 }
 
 /* =========================
@@ -100,12 +99,14 @@ body.theme-light {
 ========================= */
 input, select {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   margin-top: 12px;
   border-radius: 12px;
   border: none;
   outline: none;
   font-size: 14px;
+  background: rgba(255,255,255,0.1);
+  color: white;
 }
 
 /* =========================
@@ -113,7 +114,7 @@ input, select {
 ========================= */
 button {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   margin-top: 14px;
   border-radius: 12px;
   border: none;
@@ -123,90 +124,57 @@ button {
 }
 
 button:active {
-  transform: scale(0.96);
+  transform: scale(0.97);
 }
 
 .primary {
-  background: gold;
+  background: linear-gradient(90deg, gold, #ffdf70);
   color: black;
   font-weight: bold;
 }
 
 .secondary {
-  background: #222;
+  background: rgba(255,255,255,0.1);
   color: white;
 }
 
 /* =========================
-   THEME BUTTONS
+   SIMPLE LAYOUT FIX
 ========================= */
-.theme-btn {
-  margin: 10px 0;
-  padding: 14px;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-  font-size: 15px;
-  width: 100%;
-}
-
-/* =========================
-   GLASS THEME FIXES
-========================= */
-body.theme-light .card {
-  background: white;
-}
-
-body.theme-dark .card {
-  border: 1px solid #333;
-}
-
-body.theme-gold .card {
-  border: 1px solid rgba(245, 208, 111, 0.4);
-}
-
-/* =========================
-   CONFETTI CANVAS
-========================= */
-#confetti {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 999;
+.small {
+  font-size: 13px;
+  opacity: 0.6;
+  margin-top: 8px;
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="confetti"></canvas>
+<div class="glow"></div>
 
 <!-- =========================
-   THEME SCREEN
+   HERO SCREEN
 ========================= -->
-<div id="themeScreen" class="screen active">
+<div id="hero" class="screen active">
   <div class="card">
-    <div class="title">Choose Your Luxury Theme</div>
-
-    <button class="theme-btn" onclick="selectTheme('theme-dark')">Midnight Black Luxury</button>
-    <button class="theme-btn" onclick="selectTheme('theme-gold')">Royal Gold Luxury</button>
-    <button class="theme-btn" onclick="selectTheme('theme-light')">Elegant White Clean</button>
+    <h1>Wedding Invitation</h1>
+    <p>Tap to enter the experience</p>
+    <button class="primary" onclick="enter()">Enter</button>
   </div>
 </div>
 
 <!-- =========================
    RSVP SCREEN
 ========================= -->
-<div id="rsvpScreen" class="screen">
+<div id="rsvp" class="screen">
   <div class="card">
 
-    <div class="title">Wedding RSVP</div>
+    <h1>RSVP</h1>
+    <p class="small">We look forward to celebrating with you</p>
 
     <input id="name" placeholder="Name / الاسم" />
-    
+
     <select id="attending">
       <option value="Yes">Attending / نعم</option>
       <option value="No">Not Attending / لا</option>
@@ -214,38 +182,30 @@ body.theme-gold .card {
 
     <input id="guests" type="number" placeholder="Guests / عدد المرافقين" />
 
-    <button class="primary" onclick="sendRSVP()">Send via WhatsApp</button>
+    <button class="primary" onclick="send()">Send via WhatsApp</button>
     <button class="secondary" onclick="back()">← Back</button>
 
   </div>
 </div>
 
 <script>
-let currentTheme = "theme-dark";
-
 /* =========================
-   THEME SELECT
+   NAVIGATION FIXED
 ========================= */
-function selectTheme(theme) {
-  currentTheme = theme;
-  document.body.className = theme;
-
-  document.getElementById("themeScreen").classList.remove("active");
-  document.getElementById("rsvpScreen").classList.add("active");
+function enter() {
+  document.getElementById("hero").classList.remove("active");
+  document.getElementById("rsvp").classList.add("active");
 }
 
-/* =========================
-   BACK
-========================= */
 function back() {
-  document.getElementById("rsvpScreen").classList.remove("active");
-  document.getElementById("themeScreen").classList.add("active");
+  document.getElementById("rsvp").classList.remove("active");
+  document.getElementById("hero").classList.add("active");
 }
 
 /* =========================
-   WHATSAPP
+   WHATSAPP SEND
 ========================= */
-function sendRSVP() {
+function send() {
   const name = document.getElementById("name").value;
   const attending = document.getElementById("attending").value;
   const guests = document.getElementById("guests").value;
@@ -257,48 +217,6 @@ Attending: ${attending}
 Guests: ${guests}`;
 
   window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
-
-  launchConfetti();
-}
-
-/* =========================
-   CONFETTI (SIMPLE LUXURY EFFECT)
-========================= */
-const canvas = document.getElementById("confetti");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let pieces = [];
-
-function launchConfetti() {
-  pieces = [];
-  for (let i = 0; i < 120; i++) {
-    pieces.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * -canvas.height,
-      r: Math.random() * 6 + 2,
-      d: Math.random() * 2 + 1,
-      color: Math.random() > 0.5 ? "gold" : "white"
-    });
-  }
-  requestAnimationFrame(draw);
-}
-
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  pieces.forEach(p => {
-    ctx.fillStyle = p.color;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fill();
-    p.y += p.d * 4;
-  });
-
-  if (pieces[0]?.y < canvas.height) {
-    requestAnimationFrame(draw);
-  }
 }
 </script>
 
